@@ -14,7 +14,7 @@ int main( void )
 {
   USART_Init(MYUBRR);
 
-  while ((UCSR0A & (1<<UDRE0))) {
+  while (!(UCSR0A & (1<<RXC0))) {
     USART_Transmit(10);
     delay(100);
   }
