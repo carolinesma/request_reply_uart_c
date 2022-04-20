@@ -14,7 +14,7 @@ int main( void )
 {
   USART_Init(MYUBRR);
 
-  while (!(UCSR0A & (1<<RXC0))) {
+  while ((UCSR0A & (1<<RXC0)) == 0) {
     USART_Transmit(10);
     delay(100);
   }
@@ -31,10 +31,12 @@ void USART_Init( unsigned int ubrr)
   /*Set baud rate */
   UBRR0H = (unsigned char)(ubrr>>8);
   UBRR0L = (unsigned char)ubrr;
+  /*Disable double speed*/
+  UCSR0A = 0;
   /*Enable receiver and transmitter */
   UCSR0B = (1<<RXEN0)|(1<<TXEN0);
-  /* Set frame format: 8data, 2stop bit */
-  UCSR0C = (1<<USBS0)|(3<<UCSZ00);
+  /* Set frame format: 8data, 1 stop bit, none parity */
+  UCSR0C = (1<<UCSZ01)|(3<<UCSZ00);
 }
 
 
