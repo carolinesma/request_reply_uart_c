@@ -20,7 +20,7 @@ void USART_Init( unsigned int ubrr)
   /*Enable receiver and transmitter */
   UCSR0B = (1<<RXEN0)|(1<<TXEN0);
   /* Set frame format: 8data, 1 stop bit, none parity */
-  UCSR0C = (1<<UCSZ01)|(3<<UCSZ00);
+  UCSR0C = (0<<USBS0)|(1<<UCSZ01)|(1<<UCSZ00);
 }
 
 void USART_Transmit(unsigned char data)
