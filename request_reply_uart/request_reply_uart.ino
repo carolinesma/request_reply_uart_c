@@ -10,22 +10,6 @@
 
 int receive;
 
-int main( void )
-{
-  USART_Init(MYUBRR);
-
-  while ((UCSR0A & (1<<RXC0)) == 0) {
-    USART_Transmit(10);
-    delay(100);
-  }
-
-  receive = USART_Receive();
-
-  while(receive == 20) {
-    USART_Transmit(30);
-  }
-
-}
 void USART_Init( unsigned int ubrr)
 {
   /*Set baud rate */
@@ -38,7 +22,6 @@ void USART_Init( unsigned int ubrr)
   /* Set frame format: 8data, 1 stop bit, none parity */
   UCSR0C = (1<<UCSZ01)|(3<<UCSZ00);
 }
-
 
 void USART_Transmit(unsigned char data)
 {
@@ -56,4 +39,21 @@ unsigned char USART_Receive(void)
   ;
   /* Get and return received data from buffer */
   return UDR0;
+}
+
+int main( void )
+{
+  USART_Init(MYUBRR);
+
+  while ((UCSR0A & (1<<RXC0)) == 0) {
+    USART_Transmit(10);
+    _delay_ms(100);
+  }
+
+  receive = USART_Receive();
+
+  while(receive == 20) {
+    USART_Transmit(30);
+  }
+
 }
