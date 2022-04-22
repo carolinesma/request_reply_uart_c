@@ -8,7 +8,7 @@ void UART_Transmit(char *data);
 unsigned char UART_Receive(void );
 int main(void );
 
-#define FOSC 1843200 // Clock Speed
+#define FOSC 16000000UL // Clock Speed
 #define BAUD 9600
 #define MYUBRR FOSC/16/BAUD-1
 
