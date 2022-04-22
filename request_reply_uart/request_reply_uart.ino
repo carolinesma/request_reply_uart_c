@@ -3,14 +3,18 @@
 #include <avr/interrupt.h>
 #include <util/delay.h> 
 
+void UART_Init(unsigned int ubrr);
+void UART_Transmit(char *data);
+unsigned char UART_Receive(void );
+int main(void );
 
 #define FOSC 1843200 // Clock Speed
 #define BAUD 9600
 #define MYUBRR FOSC/16/BAUD-1
 
-int receive;
 
-void USART_Init( unsigned int ubrr)
+
+void UART_Init( unsigned int ubrr)
 {
   /*Set baud rate */
   UBRR0H = (unsigned char)(ubrr>>8);
@@ -23,7 +27,7 @@ void USART_Init( unsigned int ubrr)
   UCSR0C = (0<<USBS0)|(1<<UCSZ01)|(1<<UCSZ00);
 }
 
-void USART_Transmit(unsigned char data)
+void UART_Transmit(unsigned char data)
 {
   /* Wait for empty transmit buffer */
   while (!(UCSR0A & (1<<UDRE0)))
@@ -43,17 +47,18 @@ unsigned char USART_Receive(void)
 
 int main( void )
 {
-  USART_Init(MYUBRR);
-
+  UART_Init(MYUBRR);
+  int receive = 0;
+  
   while ((UCSR0A & (1<<RXC0)) == 0) {
-    USART_Transmit(10);
+    UART_Transmit(1);
     _delay_ms(100);
   }
 
-  receive = USART_Receive();
+  receive = UART_Receive();
 
-  while(receive == 20) {
-    USART_Transmit(30);
+  while(receive == 2) {
+    UART_Transmit(3);
   }
 
 }
