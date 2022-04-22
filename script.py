@@ -16,7 +16,7 @@ while ser.is_open: #Loop enquanto a conexão está aberta
 
     if chr(20) in msg:
       print("Arduino confirmou a conexão.")
-      ser.write(chr(11).encode())
+      ser.write(chr(30).encode())
       ser.flush() #Limpa a comunicação
       print("Finalizando conexão e script...")
       ser.close()
