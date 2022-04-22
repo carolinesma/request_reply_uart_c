@@ -4,7 +4,7 @@
 #include <util/delay.h> 
 
 void UART_Init(unsigned int ubrr);
-void UART_Transmit(char *data);
+void UART_Transmit(unsigned char data);
 unsigned char UART_Receive(void );
 int main(void );
 
@@ -48,17 +48,17 @@ unsigned char UART_Receive(void)
 int main( void )
 {
   UART_Init(MYUBRR);
-  int receive = 0;
+  unsigned char receive;
   
   while ((UCSR0A & (1<<RXC0)) == 0) {
-    UART_Transmit(1);
+    UART_Transmit(10);
     _delay_ms(100);
   }
 
   receive = UART_Receive();
 
-  while(receive == 2) {
-    UART_Transmit(3);
+  while(receive == 20) {
+    UART_Transmit(30);
   }
 
 }
